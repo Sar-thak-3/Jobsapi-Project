@@ -1,0 +1,27 @@
+*Created public api for IT jobs all around the world using web scraping*
+
+This api works on Web Scraping on TimesJobs website
+It is currently only Scraping IT jobs on TimesJobs
+
+-- For linking mongodb to python files to check which job is already pushed in database
+pip install pymongo - For connection of mongoDb to python
+--For scraping over website BeautifulSoup4 is used
+pip install BeautifulSoup4
+-- For making request to 3rd party websites requests library is used
+pip install requests
+-- For date & time
+pip install datetime
+
+npm installed libraries - 
+npm install express
+npm install cons
+npm install mongoose
+npm install dotenv
+
+While creating API 6 things are considered
+1) Job name - job
+2) Experience - experience
+3) Job location - location
+4) Job salary - salary
+5) Job skills - skills
+6) Page Number - page
