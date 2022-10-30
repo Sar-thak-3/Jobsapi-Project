@@ -63,7 +63,7 @@ app.get('/jobsapi/everything', async (req, res) => {
             if (req.query.salary) {
                 let jobFilter = result.filter(function (obj) {
                     if (obj.job_salary != null && obj.job_salary != "" && !isNaN(obj.job_salary.slice(3, 8) * 1)) {
-                        if ((obj.job_salary.slice(3, 8) * 1) <= req.query.salary) {
+                        if (((obj.job_salary.slice(3, 8) * 1) <= req.query.salary && (obj.job_salary.slice(10, 14) * 1) >= req.query.salary)) {
                             return obj;
                         }
                     }
@@ -73,19 +73,34 @@ app.get('/jobsapi/everything', async (req, res) => {
 
         // handling job skills
             if (req.query.skills) {
-                req.query.skills.forEach(function (skill) {
+                if (Array.isArray(req.query.skills)) {
+                    req.query.skills.forEach(function (skill) {
+                        let jobFilter = result.filter(function (obj) {
+                            if (obj.job_skills != null && obj.job_skills != []) {
+                                for (let i = 0; i < obj.job_skills.length; i++) {
+                                    if (obj.job_skills[i].toLowerCase().includes(skill.toLowerCase())) {
+                                        return obj;
+                                    }
+                                }
+                            }
+                        })
+                        result = jobFilter;
+                    })
+                }
+                else {
                     let jobFilter = result.filter(function (obj) {
                         if (obj.job_skills != null && obj.job_skills != []) {
                             for (let i = 0; i < obj.job_skills.length; i++) {
-                                if (obj.job_skills[i].toLowerCase().includes(skill.toLowerCase())) {
+                                if (obj.job_skills[i].toLowerCase().includes(req.query.skills.toLowerCase())) {
                                     return obj;
                                 }
                             }
                         }
                     })
                     result = jobFilter;
-                })
+                }
             }
+
 
         // handling page number
             if (req.query.page) {
@@ -98,7 +113,7 @@ app.get('/jobsapi/everything', async (req, res) => {
 
         // handling empty request
             if (result.length === 0) {
-                res.status(204).json({ error: "Sorry no matching results" })
+                res.status(200).json({ e: "Sorry no matching results" })
             }
             else {
         // handling sending request 
