@@ -51,16 +51,19 @@ def scrap(page_no=1):
                     if("KeySkills" in detail.label.text):
                         if(detail.span) :
                             skills = detail.span.text.strip()
-                            skills = skills.split(",")   
+                            skills = skills.split(",")
                             job_skills = []    
-                            for index,skill in enumerate(skills):
-                                if(index==0):
-                                    skill = skill[:-1]
-                                elif(index==len(skills)-1):
-                                    skill = skill[1:]
-                                else:
-                                    skill = skill[1:-1]           
-                                job_skills.append(skill)
+                            if(len(skills)>1):   
+                                for index,skill in enumerate(skills):
+                                    if(index==0):
+                                        skill = skill[:-1]
+                                    elif(index==len(skills)-1):
+                                        skill = skill[1:]
+                                    else:
+                                        skill = skill[1:-1]           
+                                    job_skills.append(skill)
+                            elif(len(skills)==1):
+                                job_skills.append(skills[0])
 
 
         dic = {"job_name": job_name, "job_provider": job_provider,"experience_required": experience_required,"job_location": job_location,"job_salary": job_salary,"job_link": job_link,"job_skills": job_skills}
