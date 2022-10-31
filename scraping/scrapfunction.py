@@ -35,7 +35,10 @@ def scrap(page_no=1):
                     if("card_travel" in detail.i.text):
                         experience_required = detail.text[11:].strip()
                     if("location_on" in detail.i.text):
-                        job_location = detail.text[12:].strip()
+                        if (detail.text[12:].strip() == ""):
+                            job_location = None
+                        else:    
+                            job_location = detail.text[12:].strip()
                     if("rupee" in detail.i['class']):
                         job_salary = detail.text[1:].strip()
 

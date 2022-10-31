@@ -117,7 +117,7 @@ app.get('/jobsapi/everything', async (req, res) => {
             }
             else {
         // handling sending request 
-                res.status(200).json(result);
+                res.status(200).json({totalResults: result.length ,result});
             }
         }
         catch (err) {
